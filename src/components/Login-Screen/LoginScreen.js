@@ -6,12 +6,18 @@ import { Link } from 'react-router-dom';
 function LoginScreen(props) {
     const [usernameNotFilled, setUsernameNotFilled] = useState(false);
     const [passwordNotFilled, setPasswordNotFilled] = useState(false);
+    const [userNotValid, setUserNotValid] = useState(false);
+    /**
+     * Handles submission of login form - 
+     * If username or password fields are empty, displays error
+     * If username and password dont match, displays error
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
-        let userName = e.target[0].value;
+        let username = e.target[0].value;
         let password = e.target[1].value;
         // If username/password empty, display warning
-        if (userName === '') {
+        if (username === '') {
             setUsernameNotFilled(true);
         } else {
             if (usernameNotFilled) {setUsernameNotFilled(false)};
@@ -23,9 +29,18 @@ function LoginScreen(props) {
             if (passwordNotFilled) {setPasswordNotFilled(false)};
         }
         if (usernameNotFilled || passwordNotFilled) {
+            setUserNotValid(false);
             return;
         }
-        
+        if (props.functions.isUserValid(username, password)) {
+            props.functions.setCurrentUser(username);
+            props.functions.setLoggedIn(true);
+            if (userNotValid) {setUserNotValid(false)};
+            return;
+        } else {
+            setUserNotValid(true);
+        }
+
     }
     return (
         <div className="login-screen-div">
@@ -48,6 +63,9 @@ function LoginScreen(props) {
                     <Button variant="primary" type="submit" className="login-screen-div__form__login-btn">Log In</Button>
                 </Form.Group>
             </Form>
+            {userNotValid &&
+            <p className="login-screen-div__form__warning-text">*Username and password dont match</p>
+            }
             <p className="login-screen-div__register-link-paragraph">Not registered? <Link to='/register'>Click here</Link> to register.</p>
         </div>
     );
