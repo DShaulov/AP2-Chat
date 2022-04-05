@@ -14,6 +14,7 @@ function App() {
     const [ users, updateUsers ] = useState({
         'test' : '123',
         'David': 'Abc123'
+	'Yoni': '12345678'
     });
     //const [ loggedIn , setLoggedIn ] = useState(false);
     const [ currentUser, setCurrentUser ] = useState('');
