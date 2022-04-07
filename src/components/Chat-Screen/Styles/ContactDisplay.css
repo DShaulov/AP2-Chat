@@ -1,0 +1,65 @@
+.Contact-Display-div {
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
+.Contact-Display-div__navbar {
+    display: flex;
+    flex-direction: row;
+    height:6%;
+    width:100%;
+    background: rgb(25,118,210);
+    box-shadow: 0px 3px 5px black;
+    font-family: copperplate;
+    color: azure;
+}
+.Contact-Display-div__navbar__img-div {
+    width: 10%;
+    height: 100%;
+}
+.list-icon {
+    cursor: pointer;
+    margin-top: 10%;
+}
+.Contact-Display-div__navbar__img-div__img {
+    margin-left: 15%;
+    margin-top:6%;
+    height:60px;
+    width:60px;
+    background-color: azure;
+    border-radius: 50%;
+}
+.Contact-Display-div__navbar__img-div__img-small {
+    margin-left: 15%;
+    margin-top:25%;
+    height:40px;
+    width:40px;
+    background-color: azure;
+    border-radius: 50%;
+}
+.Contact-Display-div__navbar__username-div {
+    width:70%;
+    height:100%;
+    text-align: left;
+}
+.Contact-Display-div__navbar__username-div__header {
+    margin-top: 1%;
+    margin-left: 10%;
+}
+.Contact-Display-div__navbar__username-div-small {
+    width:70%;
+    height:100%;
+    text-align: center;
+}
+.Contact-Display-div__navbar__username-div-small__header {
+    margin-top: 2%;
+}
+.Contact-Display-div__options-div__add-contact {
+    margin-top: 2%;
+    border-bottom: 1px solid black;
+}
+.Contact-Display-div__navbar__options-menu-div{
+    width:20%;
+    display: flex;
+    justify-content: right;
+}

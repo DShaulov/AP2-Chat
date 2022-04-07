@@ -1,5 +1,5 @@
 import './Styles/AppRouter.css'
-import { useRef, useState } from 'react';
+import {  useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import RegisterScreen from '../Register-Screen/RegisterScreen';
@@ -22,6 +22,10 @@ function AppRouter(props) {
             return false;
         }
     }
+    const chatFunctions = {
+        ...props.chatFunctions,
+        setLoggedIn
+    }
     return (
         <Router>
             <div className="App">
@@ -29,7 +33,7 @@ function AppRouter(props) {
                 <div className="App__content">
                     <Routes>
                         {loggedIn ?
-                        <Route path="/" element={<ChatScreen functions={props.chatFunctions} currentUser={props.currentUser}/>}/> :
+                        <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} userProfileImages={props.userProfileImages}/>}/> :
                         <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
                         }
                         <Route path="/register" element={<RegisterScreen functions={props.registerFunctions}/>}/>

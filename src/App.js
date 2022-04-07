@@ -16,12 +16,24 @@ function App() {
         }
         return '';
     }
+
     const [ users, updateUsers ] = useState({
-        'test' : '123',
-        'David': 'Abc123',
-    	'Yoni': '12345678'
+        'David': '123',
+    	'Yoni': '123',
+        'Messi': '123',
+        'Ronaldo': '123',
+        'Max': '123'
     });
-    //TODO
+    const [ userProfileImages, updateUserProfileImages ] = useState({
+        'David': 'default-user.png',
+    	'Yoni': 'default-user.png',
+        'Messi': 'default-user.png',
+        'Ronaldo': 'default-user.png',
+        'Max': 'default-user.png'
+    });
+    const [ contacts, updateContacts ] = useState({
+        'David': ['Max', 'Messi']
+    })
     /**
      * Checks whether or not a username is already taken
      */
@@ -60,7 +72,16 @@ function App() {
 
     }
     return (
-        <AppRouter registerFunctions={registerFunctions} loginFunctions={loginFunctions} chatFunctions={chatFunctions} currentUser={currentUser}/>
+        <AppRouter
+        registerFunctions={registerFunctions} loginFunctions={loginFunctions} chatFunctions={chatFunctions}
+        currentUser={currentUser} userProfileImages={userProfileImages}/>
     );
 }
 export default App;
+
+
+/**
+ * App - users
+ * Approuter - loggedIn
+ * 
+ */

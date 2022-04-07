@@ -3,10 +3,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(47, 47, 46);
+    background-color: #0B0C10;
     color: azure;
     flex-basis: 10%;
     z-index: 2;
+    box-shadow: 0px 3px 10px  black;
 }
 .navbar__title-div {
     display: flex;
