@@ -18,11 +18,36 @@ function App() {
     }
 
     const [ users, updateUsers ] = useState({
-        'David': '123',
-    	'Yoni': '123',
-        'Messi': '123',
-        'Ronaldo': '123',
-        'Max': '123'
+        'David': {
+            password: '123',
+            displayName: 'David DIS',
+            profileImage: 'default-user.png',
+            contacts: ['Max', 'Messi']
+        },
+    	'Yoni': {
+            password: '123',
+            displayName: 'Yoni DIS',
+            profileImage: 'default-user.png',
+            contacts: ['Ronaldo', 'Messi']
+        },
+        'Messi': {
+            password: '123',
+            displayName: 'Leo',
+            profileImage: 'default-user.png',
+            contacts: ['Ronaldo', 'Messi']
+        },
+        'Ronaldo': {
+            password: '123',
+            displayName: 'Cristiano',
+            profileImage: 'default-user.png',
+            contacts: ['Ronaldo', 'Messi']
+        },
+        'Max': {
+            password: '123',
+            displayName: 'Max V',
+            profileImage: 'default-user.png',
+            contacts: ['Ronaldo', 'Messi']
+        },
     });
     const [ userProfileImages, updateUserProfileImages ] = useState({
         'David': 'default-user.png',
@@ -38,24 +63,24 @@ function App() {
      * Checks whether or not a username is already taken
      */
     function isUsernameTaken(username) {
-        if (username in users) {
-            return true;
+        for (const user in Object.keys(users)) {
+            if (user === username) {
+                return true;
+            }
         }
         return false;
     };
     /**
+     * TODO
      * Adds user to users database
      */
     function addUser(username, password) {
-        let pair = {};
-        pair[username] = password;
-        updateUsers({ ...users, ...pair});
     };
     /**
      * Check if provided password and username match
      */
     function isUserValid(username, password) {
-        if (users[username] === password) {
+        if (users[username].password === password) {
             return true;
         }
         return false;
@@ -69,19 +94,12 @@ function App() {
         addUser: addUser
     };
     const chatFunctions = {
-
+        updateUsers: updateUsers
     }
     return (
         <AppRouter
         registerFunctions={registerFunctions} loginFunctions={loginFunctions} chatFunctions={chatFunctions}
-        currentUser={currentUser} userProfileImages={userProfileImages}/>
+        currentUser={currentUser} users={users}/>
     );
 }
 export default App;
-
-
-/**
- * App - users
- * Approuter - loggedIn
- * 
- */
