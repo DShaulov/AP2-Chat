@@ -10,7 +10,6 @@ function App() {
      */
     function getCurrentUser() {
         let storageCurrentUser = localStorage.getItem('currentUser');
-        console.log(storageCurrentUser);
         if (storageCurrentUser !== null) {
             return storageCurrentUser
         }
@@ -18,47 +17,37 @@ function App() {
     }
 
     const [ users, updateUsers ] = useState({
-        'David': {
+        'Batman': {
             password: '123',
-            displayName: 'David DIS',
-            profileImage: 'default-user.png',
+            displayName: 'Batman',
+            profileImage: 'batman-cropped.png',
             contacts: ['Max', 'Messi']
         },
-    	'Yoni': {
+    	'Superman': {
             password: '123',
-            displayName: 'Yoni DIS',
-            profileImage: 'default-user.png',
-            contacts: ['Ronaldo', 'Messi']
+            displayName: 'Superman',
+            profileImage: 'superman-cropped.png',
+            contacts: ['Batman', 'Messi']
         },
         'Messi': {
             password: '123',
-            displayName: 'Leo',
-            profileImage: 'default-user.png',
-            contacts: ['Ronaldo', 'Messi']
+            displayName: 'Messi',
+            profileImage: 'messi-cropped.png',
+            contacts: ['Ronaldo', 'Batman']
         },
         'Ronaldo': {
             password: '123',
-            displayName: 'Cristiano',
-            profileImage: 'default-user.png',
-            contacts: ['Ronaldo', 'Messi']
+            displayName: 'Ronaldo',
+            profileImage: 'ronaldo-cropped.png',
+            contacts: ['Superman', 'Messi']
         },
         'Max': {
             password: '123',
-            displayName: 'Max V',
-            profileImage: 'default-user.png',
-            contacts: ['Ronaldo', 'Messi']
+            displayName: 'Max',
+            profileImage: 'max-v.png',
+            contacts: ['Ronaldo', 'Superman']
         },
     });
-    const [ userProfileImages, updateUserProfileImages ] = useState({
-        'David': 'default-user.png',
-    	'Yoni': 'default-user.png',
-        'Messi': 'default-user.png',
-        'Ronaldo': 'default-user.png',
-        'Max': 'default-user.png'
-    });
-    const [ contacts, updateContacts ] = useState({
-        'David': ['Max', 'Messi']
-    })
     /**
      * Checks whether or not a username is already taken
      */

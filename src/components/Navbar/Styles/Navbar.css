@@ -26,3 +26,10 @@
     font-size: 30px;
     margin-top: 8%;
 }
+.custom-navbar__image-brand-container {
+    display: flex;
+}
+h5 {
+    font-family: copperplate;
+    font-weight: 600;
+}

@@ -1,8 +1,17 @@
 import './Styles/MessageDisplay.css';
+import { Container, Navbar } from 'react-bootstrap';
 
 function MessageDisplay(props) {
     return (
-        <p>Testing</p>
+        <div className="MessageDisplay">
+            <Navbar></Navbar>
+            <div>
+
+            </div>
+            <Container>
+
+            </Container>
+        </div>
     );
 }
 export default MessageDisplay;

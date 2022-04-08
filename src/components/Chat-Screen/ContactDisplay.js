@@ -1,7 +1,8 @@
 import './Styles/ContactDisplay.css';
 import { useState } from 'react';
 import { List } from 'react-bootstrap-icons';
-import { Button, Dropdown, ListGroup, Modal, Form } from 'react-bootstrap';
+import { Button, Dropdown, ListGroup, Modal, Form, Navbar, Container, Image } from 'react-bootstrap';
+import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 
 
 function ContactDisplay(props) {
@@ -27,18 +28,18 @@ function ContactDisplay(props) {
      */
     function makeContactList() {
         let contactListItems = [];
-        console.log(props.users);
+        let id = 0;
         let currentUserContacts = props.users[props.currentUser].contacts;
         for (const contact of currentUserContacts) {
             contactListItems.push(
-                <ListGroup.Item action onClick={openChat} className="overflow-hidden">
+                <ListGroup.Item action="true" onClick={openChat} className="overflow-hidden" key={id}>
                     <div className="list-card-div">
                         <div className="list-card-div__profile-image-div">
                             <img className="list-card-div__profile-image-div__img" 
                             src={require(`../../userImages/${props.users[contact].profileImage}`)} alt=''></img>
                         </div>
                         <div className="list-card-div__contact-name-div">
-                            <div clasName="list-card-div__contact-name-div__name-title-div">
+                            <div className="list-card-div__contact-name-div__name-title-div">
                                 <h5 className="list-card-div__contact-name-div__name-title-div__name-title">{props.users[contact].displayName}</h5>
                             </div>
                             <div className="list-card-div__contact-name-div__last-message-div">
@@ -51,6 +52,7 @@ function ContactDisplay(props) {
                     </div>
                 </ListGroup.Item>
             );
+            id ++;
         };
         return contactListItems;
     };
@@ -58,14 +60,12 @@ function ContactDisplay(props) {
      * TODO
      */
     function openChat(event) {
-        console.log("OPEN CHAT");
     }
     /**
      * Checks if contact exists
      */
     function contactExists(contactUserName) {
-        for (const user in Object.keys(props.users)) {
-            console.log(user);
+        for (const user in props.users) {
             if (user === contactUserName) {
                 return true;
             }
@@ -75,62 +75,49 @@ function ContactDisplay(props) {
     /**
      * Adds contact if it exists
      */
-    function addContact() {
+    function addContact(e) {
+        e.preventDefault();
+        let username = e.target[0].value;
+        if (contactExists(username) && username !== props.currentUser) {
+            let updatedUsers = {...props.users};
+            if (!updatedUsers[props.currentUser].contacts.includes(username)) {
+                updatedUsers[props.currentUser].contacts.push(username);
+            }
+            if (!updatedUsers[username].contacts.includes(props.currentUser)) {
+                updatedUsers[username].contacts.push(props.currentUser);
+            }
+            props.functions.updateUsers(updatedUsers);
+            hideModal();
+        }
+        else {
+            setContactDoesNotExist(true);
+        }
     };
+    function hideModal() {
+        setShowAddContactPopup(false);
+        setContactDoesNotExist(false);
+    }
     return (
         <div className="Contact-Display-div">
-            {
-                (windowWidth > 850) && (windowHeight > 950)
-                ?
-                <div className="Contact-Display-div__navbar">
-                    <div className="Contact-Display-div__navbar__options-menu-div">
-                        <Dropdown className="Contact-Display-div__navbar__options-menu-div__dropdown">
-                            <Dropdown.Toggle variant="dark">
-                                <List size={"2.75em"}  className="list-icon"/>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu variant="dark">
-                                <Dropdown.Item action onClick={()=>{setShowAddContactPopup(!showAddContactPopup)}}>Add Contact</Dropdown.Item>
-                                <Dropdown.Item onClick={logOut}>Log Out</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>   
-                    </div>
-                    
-                    <div className="Contact-Display-div__navbar__username-div">
-                        <h1 className="Contact-Display-div__navbar__username-div__header">{props.users[props.currentUser].displayName}</h1>
-                    </div>
-                    <div className="Contact-Display-div__navbar__img-div">
-                        <img className="Contact-Display-div__navbar__img-div__img" 
-                        src={require(`../../userImages/${props.users[props.currentUser].profileImage}`)} alt=''></img>
-                    </div> 
-                </div> 
-                :
-                <div className="Contact-Display-div__navbar">
-                    <div className="Contact-Display-div__navbar__options-menu-div">
-                        <Dropdown className="Contact-Display-div__navbar__options-menu-div__dropdown">
-                            <Dropdown.Toggle variant="dark">
-                                <List size={'2em'}  className="list-icon"/>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu variant="dark">
-                                <Dropdown.Item>Add Contact</Dropdown.Item>
-                                <Dropdown.Item onClick={logOut}>Log Out</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>     
-                    </div>
-                    <div className="Contact-Display-div__navbar__username-div-small">
-                        <h2 className="Contact-Display-div__navbar__username-div-small__header">{props.currentUser}</h2>
-                    </div> 
-                    <div className="Contact-Display-div__navbar__img-div">
-                        <img className="Contact-Display-div__navbar__img-div__img-small" 
-                        src={require(`../../userImages/${props.users[props.currentUser].profileImage}`)} alt=''></img>
-                    </div>
-                </div>
-            }
+            <Navbar className="custom-navbar" bg="light" variant="light">
+                <Container className="custom-navbar__image-brand-container">
+                    <Image src={require(`../../userImages/${props.users[props.currentUser].profileImage}`)} className="custom-navbar__image"></Image>
+                    <Navbar.Brand className="custom-navbar__brand"><h5>{props.users[props.currentUser].displayName}</h5></Navbar.Brand>
+                    <Dropdown drop={"start"}>
+                        <DropdownToggle>Options</DropdownToggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={()=>{setShowAddContactPopup(true)}}>Add Contact</Dropdown.Item>
+                            <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Container>
+            </Navbar>
             <div className="Contact-Display-div__contacts-div">
                 <ListGroup className="overflow-auto custom-list">
                     {makeContactList()}
                 </ListGroup>
             </div>
-            <Modal class="modal" show={showAddContactPopup} onHide={()=>{setShowAddContactPopup(false)}}>
+            <Modal  show={showAddContactPopup} onHide={hideModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Contact</Modal.Title>
                 </Modal.Header>
