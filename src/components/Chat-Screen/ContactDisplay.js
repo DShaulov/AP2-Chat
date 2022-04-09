@@ -24,6 +24,16 @@ function ContactDisplay(props) {
         props.functions.setLoggedIn(false);
     }
     /**
+     * Opens the message display upon clicking on a contact
+     */
+    function openChat(event) {
+        let parentElement = event.target;
+        while (parentElement.nodeName !== 'BUTTON') {
+            parentElement = parentElement.parentNode;
+        }
+        props.functions.openMessageDisplay(parentElement.name);
+    }
+    /**
      * Creates the list items making up the contact list
      */
     function makeContactList() {
@@ -32,7 +42,7 @@ function ContactDisplay(props) {
         let currentUserContacts = props.users[props.currentUser].contacts;
         for (const contact of currentUserContacts) {
             contactListItems.push(
-                <ListGroup.Item action="true" onClick={openChat} className="overflow-hidden" key={id}>
+                <ListGroup.Item action="true" onClick={openChat} className="overflow-hidden" key={id} name={contact}>
                     <div className="list-card-div">
                         <div className="list-card-div__profile-image-div">
                             <img className="list-card-div__profile-image-div__img" 
@@ -59,8 +69,7 @@ function ContactDisplay(props) {
     /**
      * TODO
      */
-    function openChat(event) {
-    }
+    
     /**
      * Checks if contact exists
      */

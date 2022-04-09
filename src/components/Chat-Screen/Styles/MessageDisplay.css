@@ -1,0 +1,24 @@
+.custom-navbar {
+    flex-basis: 8%;
+    box-shadow: 2px 0.5px 1px black;
+    display: flex;
+    justify-content: space-between;
+    background-color: azure;
+}
+.custom-navbar__contact-brand {
+    width: 30%;
+    margin-right: 15%;
+    text-align:center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+.custom-navbar__contact-image {
+    margin-left: 3%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.spacer {
+    color: azure;
+}

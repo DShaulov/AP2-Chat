@@ -122,7 +122,7 @@
 .custom-navbar__brand {
     margin-left: 2%;
     width: 30%;
-    text-align:left;
+    text-align:center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
