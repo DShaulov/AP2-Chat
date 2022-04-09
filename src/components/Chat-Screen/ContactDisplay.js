@@ -53,11 +53,11 @@ function ContactDisplay(props) {
                                 <h5 className="list-card-div__contact-name-div__name-title-div__name-title">{props.users[contact].displayName}</h5>
                             </div>
                             <div className="list-card-div__contact-name-div__last-message-div">
-                                <p className="list-card-div__contact-name-div__last-message-div__last-message">Sed ut perspiciatis, unde omnis iste natus
-                                 error sit voluptatem accusantium doloremque laudantium,
-                                 totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-                                 , explicabo. Nemo enim ipsam voluptatem, quia voluptas sit</p>   
+                                <p className="list-card-div__contact-name-div__last-message-div__last-message">{parseLastMessage(contact)}</p>   
                             </div>
+                        </div>
+                        <div className="list-card-div__time-div">
+                            <time className="list-card-div__time-div__time">{parseLastMessageTime(contact)}</time>
                         </div>
                     </div>
                 </ListGroup.Item>
@@ -67,9 +67,21 @@ function ContactDisplay(props) {
         return contactListItems;
     };
     /**
-     * TODO
+     * Retrives the last message exchanged between users
      */
-    
+    function parseLastMessage(contact) {
+        let allMessages = props.messages[props.currentUser][contact];
+        let lastMessage = allMessages[allMessages.length - 1];
+        return lastMessage.content;
+    }
+    /**
+     * Retries the time of the last message exchange
+     */
+    function parseLastMessageTime(contact) {
+        let allMessages = props.messages[props.currentUser][contact];
+        let lastMessage = allMessages[allMessages.length - 1];
+        return lastMessage.time;
+    }
     /**
      * Checks if contact exists
      */

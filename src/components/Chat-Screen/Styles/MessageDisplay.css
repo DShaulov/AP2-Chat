@@ -1,3 +1,8 @@
+.MessageDisplay {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+}
 .custom-navbar {
     flex-basis: 8%;
     box-shadow: 2px 0.5px 1px black;
@@ -15,10 +20,116 @@
 }
 .custom-navbar__contact-image {
     margin-left: 3%;
-    width: 60px;
-    height: 60px;
+    width: 60.8px;
+    height: 60.8px;
     border-radius: 50%;
 }
 .spacer {
     color: azure;
+}
+.messages-div {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 84%;
+}
+.custom-footer {
+    flex-basis: 8%;
+    box-shadow: 0.5px 0.5px 0.5px 1px black;
+    display: flex;
+    flex-direction: row;
+    background-color: azure;
+}
+.custom-footer__custom-form {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+.custom-list-item {
+    display: flex;
+    flex-direction: row;
+}
+.custom-footer__custom-form__custom-grp {
+    width: 100%;
+}
+.custom-footer__custom-form__custom-grp__custom-control {
+    width: 100%;
+}
+.chat-bubble-container {
+    display: flex;
+    width: 100%;
+}
+  
+.chat-bubble-to {
+    position: relative;
+    background: azure;
+    font-size: 1.4rem;
+    padding: 1rem 1.4rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem; 
+    border-radius: .9rem;
+    width: fit-content;
+    max-width: 300px;
+    margin-right: 2rem;
+}
+.chat-bubble-from {
+    position: relative;
+    background: azure;
+    font-size: 1.4rem;
+    padding: 1rem 1.4rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.2rem; 
+    border-radius: .9rem;
+    width: fit-content;
+    max-width: 300px;
+    margin-left: 2rem;
+}
+
+.chat-bubble-from::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    z-index: 1;
+    border-style: solid;
+    border-color: transparent azure;
+    border-width: 10px 17px 10px 0;
+    top: 51%;
+    left: -17px;
+    margin-top: -10px;
+}
+
+.chat-bubble-to::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    z-index: 1;
+    border-style: solid;
+    border-color: transparent azure;
+    border-width: 10px 0 10px 17px;
+    top: 51%;
+    right: -17px;
+    margin-top: -10px;
+}
+.text-message-paragraph {
+    margin-bottom: 0rem;
+    text-align: left;
+}
+.chat-bubble-container {
+    display: flex;
+    flex-direction: row;
+}
+.from-message-timestamp {
+    margin-right: auto;
+    margin-top: 2.5rem;
+    margin-left: 0.5rem;
+}
+.to-message-timestamp {
+    margin-left: auto;
+    margin-top: 2.5rem;
+    margin-right: 0.5rem;
+}
+.list-card-div__time-div__time {
+    margin-top: 2rem;
+    display: flex;
 }
