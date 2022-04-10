@@ -73,6 +73,12 @@ function ContactDisplay(props) {
         let allMessages = props.messages[props.currentUser][contact];
         if (allMessages.length !== 0) {
             let lastMessage = allMessages[allMessages.length - 1];
+            if (lastMessage.type === 'IMG') {
+                return 'IMG'
+            }
+            if (lastMessage.type === 'VIDEO') {
+                return 'VIDEO'
+            }
             return lastMessage.content;
         }
         return '';
@@ -149,23 +155,23 @@ function ContactDisplay(props) {
                     {makeContactList()}
                 </ListGroup>
             </div>
-            <Modal  show={showAddContactPopup} onHide={hideModal}>
+            <Modal  show={showAddContactPopup} onHide={hideModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Contact</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                        <Form onSubmit={addContact} className="modal__form">
-                            <Form.Group >
-                                <Form.Label>Contact:</Form.Label>
-                                <Form.Control placeholder="Enter contact username"></Form.Control>
-                                {contactDoesNotExist &&
-                                <Form.Text className="warning-text">*Contact does not exist</Form.Text>
-                                }
-                            </Form.Group>
-                            <Form.Group className="modal__form__add-btn-grp">
-                                <Button variant="primary" type="submit" className="modal__form__add-btn">Add</Button>
-                            </Form.Group>
-                        </Form>
+                    <Form onSubmit={addContact} className="modal__form">
+                        <Form.Group >
+                            <Form.Label>Contact:</Form.Label>
+                            <Form.Control placeholder="Enter contact username"></Form.Control>
+                            {contactDoesNotExist &&
+                            <Form.Text className="warning-text">*Contact does not exist</Form.Text>
+                            }
+                        </Form.Group>
+                        <Form.Group className="modal__form__add-btn-grp">
+                            <Button variant="primary" type="submit" className="modal__form__add-btn">Add</Button>
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
             </Modal>
         </div>

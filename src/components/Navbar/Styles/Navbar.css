@@ -5,7 +5,8 @@
     align-items: center;
     background-color: #0B0C10;
     color: azure;
-    flex-basis: 10%;
+    height: 10%;
+    max-height: 10%;
     z-index: 2;
     box-shadow: 0px 3px 10px  black;
 }

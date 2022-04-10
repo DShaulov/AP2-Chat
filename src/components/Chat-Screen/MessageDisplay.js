@@ -1,9 +1,16 @@
 import './Styles/MessageDisplay.css';
-import { useState } from 'react';
-import { ListGroup, Navbar, Image, Button, Form, Popover, Overlay, OverlayTrigger } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { ListGroup, Navbar, Image, Button, Form, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import { Paperclip, ArrowRightCircle, Mic, Camera, CameraVideo } from 'react-bootstrap-icons';
 
 function MessageDisplay(props) {
+    const [ showUploadImagePopup, setShowUploadImagePopup] = useState(false);
+    const [ showUploadVideoPopup, setShowUploadVideoPopup] = useState(false);
+    const [ showRecordVoicePopup, setShowRecordVoicePopup] = useState(false);
+    useEffect(()=> {
+        let chatDiv = document.getElementsByClassName("messages-div")[0];
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+    });
     const date = new Date();
     /**
      * Sends a message to another use
@@ -31,6 +38,7 @@ function MessageDisplay(props) {
         );
         event.target[0].value = '';
         props.functions.updateMessages(updatedMessages);
+        ;
     };
     /**
      * Returns current date in dd/mm/yy format
@@ -57,38 +65,116 @@ function MessageDisplay(props) {
         let messageList = [];
         for (const message of props.messages[props.currentUser][props.userChattingWith]) {
             if (message.type === 'TEXT') {
-                let className = '';
-                if (message.direction === 'TO') {
-                    className = 'chat-bubble-to';
-                    messageList.push(
-                        <div className="chat-bubble-container" key={messageId}>
-                            <time className="to-message-timestamp">{message.time}</time>
-                            <div className={className} >
-                                <p className="text-message-paragraph">{message.content}</p>
-                            </div>
-                        </div>
-                        
-                    )
-                    messageId++;
-                }
-                else {
-                    className = 'chat-bubble-from';
-                    messageList.push(
-                        <div className="chat-bubble-container">
-                            <div className={className} key={messageId}>
-                                <p className="text-message-paragraph">{message.content}</p>
-                            </div>
-                            <time className="from-message-timestamp">{message.time}</time>
-                        </div>
-                        
-                    )
-                    messageId++;
-                }
-                
+                buildTextMessage(message, messageList, messageId);
+                messageId++;
             }
-            
+            else if (message.type === 'IMG') {
+                buildImgMessage(message, messageList, messageId);
+            }
         }
         return messageList;
+    }
+    /**
+     * Helper function
+     */
+    function buildTextMessage(message ,messageList, messageId) {
+        let className = '';
+        if (message.direction === 'TO') {
+            className = 'chat-bubble-to';
+            messageList.push(
+                <div className="chat-bubble-container" key={messageId}>
+                    <time className="to-message-timestamp">{message.time}</time>
+                    <div className={className} >
+                        <p className="text-message-paragraph">{message.content}</p>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            className = 'chat-bubble-from';
+            messageList.push(
+                <div className="chat-bubble-container"  key={messageId}> 
+                    <div className={className}>
+                        <p className="text-message-paragraph">{message.content}</p>
+                    </div>
+                    <time className="from-message-timestamp">{message.time}</time>
+                </div>
+            )
+        }
+    }
+    /**
+     * Helper function
+     */
+    function buildImgMessage(message ,messageList, messageId) {
+        let className = '';
+        let imageURL = URL.createObjectURL(message.content);
+        if (message.direction === 'TO') {
+            className = 'chat-bubble-to';
+            messageList.push(
+                <div className="chat-bubble-container" key={messageId}>
+                    <time className="to-message-timestamp">{message.time}</time>
+                    <div className={className} >
+                        <Image className="image-message" src={imageURL}></Image>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            className = 'chat-bubble-from';
+            messageList.push(
+                <div className="chat-bubble-container"  key={messageId}> 
+                    <div className={className}>
+                        <Image className="image-message"src={imageURL}></Image>
+                    </div>
+                    <time className="from-message-timestamp">{message.time}</time>
+                </div>
+            )
+        }
+    }
+    /**
+     * Handles user image upload
+     */
+    function handleUploadImage(event) {
+        event.preventDefault();
+        let imageFile = event.target[0].files[0];
+        let updatedMessages = {...props.messages};
+        props.functions.updateMessages(updatedMessages);
+        updatedMessages[props.currentUser][props.userChattingWith].push(
+            {
+                type: 'IMG',
+                direction: 'TO',
+                date: parseDate(),
+                time: parseTime(),
+                content: imageFile
+            }
+        );
+        updatedMessages[props.userChattingWith][props.currentUser].push(
+            {
+                type: 'IMG',
+                direction: 'FROM',
+                date: parseDate(),
+                time: parseTime(),
+                content: imageFile
+            }
+        );
+        setShowUploadImagePopup(false);
+        ;
+    }
+    /**
+     * Handles user video upload
+     */
+    function handleUploadVideo(event) {
+        event.preventDefault();
+        setShowUploadVideoPopup(false);
+        ;
+    }
+    /**
+     * Handles user voice recording
+     */
+    function handleRecordVoice(event) {
+        event.preventDefault();
+        setShowRecordVoicePopup(false);
+        ;
     }
     const popover = (
         <Popover>
@@ -97,13 +183,16 @@ function MessageDisplay(props) {
             </Popover.Header>
             <Popover.Body>
                 <ListGroup horizontal>
-                    <ListGroup.Item action>
+                    <ListGroup.Item action onClick={()=>{
+                        setShowRecordVoicePopup(true); setShowUploadImagePopup(false); setShowUploadVideoPopup(false)}}>
                         <Mic/>
                     </ListGroup.Item>
-                    <ListGroup.Item action>
+                    <ListGroup.Item action onClick={()=>{
+                        setShowUploadVideoPopup(true); setShowRecordVoicePopup(false); setShowUploadImagePopup(false)}}>
                         <CameraVideo/>
                     </ListGroup.Item>
-                    <ListGroup.Item action>
+                    <ListGroup.Item action onClick={()=>{
+                        setShowUploadImagePopup(true); setShowRecordVoicePopup(false); setShowUploadVideoPopup(false)}}>
                         <Camera/>
                     </ListGroup.Item>
                 </ListGroup>
@@ -120,6 +209,51 @@ function MessageDisplay(props) {
             <div className="messages-div">
                 {buildMessages()}
             </div>
+            <Modal show={showUploadImagePopup} onHide={()=>{setShowUploadImagePopup(false)}} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Send Image:</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleUploadImage}>
+                        <Form.Group>
+                            <Form.Control type="file" placeholder='Choose file' accept="image/*"></Form.Control>
+                        </Form.Group>
+                        <Form.Group className="modal__form__add-btn-grp">
+                            <Button variant="primary" type="submit">Send</Button>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+            <Modal show={showUploadVideoPopup} onHide={()=>{setShowUploadVideoPopup(false)}} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Send Video:</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleUploadVideo}>
+                        <Form.Group>
+                            <Form.Control type="file" placeholder='Choose file' accept="video/mp4,video/x-m4v,video/*"></Form.Control>
+                        </Form.Group>
+                        <Form.Group className="modal__form__add-btn-grp">
+                            <Button variant="primary" type="submit">Send</Button>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+            <Modal show={showRecordVoicePopup} onHide={()=>{setShowRecordVoicePopup(false)}} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Send Voice Message:</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleRecordVoice}>
+                        <Form.Group>
+                            <Form.Control type="file" placeholder='Choose file'></Form.Control>
+                        </Form.Group>
+                        <Form.Group className="modal__form__add-btn-grp">
+                            <Button variant="primary" type="submit">Send</Button>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+            </Modal>
             <Navbar className="custom-footer" variant="light" bg="light">
                 <OverlayTrigger trigger="click" placement='top' overlay={popover} rootClose='true'>
                     <Button>

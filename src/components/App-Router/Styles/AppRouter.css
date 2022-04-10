@@ -3,6 +3,6 @@
 }
 
 .App__content{
-    height: 100%;
-    flex-basis: 90%;
+    height: 90%;
+    max-height: 90%;
 }
