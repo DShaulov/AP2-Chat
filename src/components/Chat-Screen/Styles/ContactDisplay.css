@@ -128,3 +128,16 @@
     overflow: hidden;
     text-overflow: ellipsis
 }
+.last-message-div {
+    display: flex;
+    flex-direction: row;
+}
+.last-message-paragraph {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 2%;
+}
+.last-message-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+} 

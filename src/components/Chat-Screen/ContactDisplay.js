@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { List } from 'react-bootstrap-icons';
 import { Button, Dropdown, ListGroup, Modal, Form, Navbar, Container, Image } from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
+import { CameraFill, CameraVideoFill, MicFill } from 'react-bootstrap-icons';
 
 
 function ContactDisplay(props) {
-    const [ displayOptions, setDisplayOptions ] = useState(false);
     const [ windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [ windowHeight, setWindowHeight ] = useState(window.innerHeight);
     const [ showAddContactPopup, setShowAddContactPopup ] = useState(false);
@@ -53,7 +53,9 @@ function ContactDisplay(props) {
                                 <h5 className="list-card-div__contact-name-div__name-title-div__name-title">{props.users[contact].displayName}</h5>
                             </div>
                             <div className="list-card-div__contact-name-div__last-message-div">
-                                <p className="list-card-div__contact-name-div__last-message-div__last-message">{parseLastMessage(contact)}</p>   
+                                <div className="last-message-div">
+                                    {parseLastMessage(contact)}
+                                </div> 
                             </div>
                         </div>
                         <div className="list-card-div__time-div">
@@ -73,13 +75,33 @@ function ContactDisplay(props) {
         let allMessages = props.messages[props.currentUser][contact];
         if (allMessages.length !== 0) {
             let lastMessage = allMessages[allMessages.length - 1];
-            if (lastMessage.type === 'IMG') {
-                return 'IMG'
+            if (lastMessage.type === 'IMG' || lastMessage.type === 'IMG-LOCAL') {
+                return (
+                    <>
+                        <CameraFill className="last-message-icon"/>
+                        <p className="last-message-paragraph">Image</p>
+                    </>
+                );
+            };
+            if (lastMessage.type === 'VIDEO' || lastMessage.type === 'VIDEO-LOCAL') {
+                return (
+                    <>
+                        <CameraVideoFill className="last-message-icon"/>
+                        <p className="last-message-paragraph">Video</p>
+                    </>
+                );
             }
-            if (lastMessage.type === 'VIDEO') {
-                return 'VIDEO'
+            if (lastMessage.type === 'VOICE' || lastMessage.type === 'VOICE-LOCAL') {
+                return (
+                    <>
+                        <MicFill className="last-message-icon"/>
+                        <p className="last-message-paragraph">Recording</p>
+                    </>
+                );
             }
-            return lastMessage.content;
+            return (
+                <p className="list-card-div__contact-name-div__last-message-div__last-message">{lastMessage.content}</p>
+            );
         }
         return '';
     }

@@ -118,13 +118,13 @@
 .text-message-paragraph {
     margin-bottom: 0rem;
     text-align: left;
+    overflow-wrap: break-word;
 }
 .chat-bubble-container {
     display: flex;
     flex-direction: row;
 }
 .from-message-timestamp {
-    margin-right: auto;
     margin-top: auto;
     margin-left: 0.5rem;
     margin-bottom: 0.5rem;
@@ -146,4 +146,19 @@
 }   
 .image-message {
     max-width: 250px;
+}
+.custom-video {
+    max-width: 250px;
+    max-height: 250px;
+}
+.from-message-datestamp {
+    margin-right: auto;
+    margin-top: auto;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.to-message-datestamp {
+    margin-top: auto;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
 }

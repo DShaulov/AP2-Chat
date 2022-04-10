@@ -14,6 +14,13 @@ const hardcodedMessages = {
                 date: '9/4/2022',
                 time: '21:45',
                 content: 'Dont you have a clown to chase?'
+            },
+            {
+                type: 'VIDEO-LOCAL',
+                direction: 'TO',
+                date: '9/4/2022',
+                time: '21:46',
+                content: 'video-example.mp4'
             }
         ],
         'Messi': [
@@ -37,7 +44,14 @@ const hardcodedMessages = {
                 date: '9/4/2022',
                 time: '18:25',
                 content: 'No hablo ingles'
-            }
+            },
+            {
+                type: 'VIDEO-LOCAL',
+                direction: 'TO',
+                date: '9/4/2022',
+                time: '18:26',
+                content: 'video-example2.mp4'
+            },
         ],
         'Ronaldo': [
             {
@@ -46,6 +60,13 @@ const hardcodedMessages = {
                 date: '9/4/2022',
                 time: '8:52',
                 content: 'Going to Manchester United was a huge mistake.'
+            },
+            {
+                type: 'IMG-LOCAL',
+                direction: 'FROM',
+                date: '9/4/2022',
+                time: '8:53',
+                content: 'crying-jordan.png'
             },
             {
                 type: 'TEXT',
@@ -68,7 +89,14 @@ const hardcodedMessages = {
                 direction: 'FROM',
                 date: '9/4/2022',
                 time: '12:32',
-                content: 'Awful, car had battery problems.'
+                content: 'Who is this?'
+            },
+            {
+                type: 'IMG-LOCAL',
+                direction: 'TO',
+                date: '9/4/2022',
+                time: '12:33',
+                content: 'surprised-batman.jpg'
             }
         ],
         'Joker': [
@@ -103,6 +131,13 @@ const hardcodedMessages = {
                 date: '9/4/2022',
                 time: '21:45',
                 content: 'Dont you have a clown to chase?'
+            },
+            {
+                type: 'VIDEO-LOCAL',
+                direction: 'FROM',
+                date: '9/4/2022',
+                time: '21:46',
+                content: 'video-example.mp4'
             }
         ],
         'Messi': [],
@@ -135,7 +170,14 @@ const hardcodedMessages = {
                 date: '9/4/2022',
                 time: '18:25',
                 content: 'No hablo ingles'
-            }
+            },
+            {
+                type: 'VIDEO-LOCAL',
+                direction: 'FROM',
+                date: '9/4/2022',
+                time: '18:26',
+                content: 'video-example2.mp4'
+            },
         ],
         'Ronaldo': [],
         'Max': [],
@@ -151,6 +193,13 @@ const hardcodedMessages = {
                 date: '9/4/2022',
                 time: '8:52',
                 content: 'Going to Manchester United was a huge mistake.'
+            },
+            {
+                type: 'IMG-LOCAL',
+                direction: 'TO',
+                date: '9/4/2022',
+                time: '8:53',
+                content: 'crying-jordan.png'
             },
             {
                 type: 'TEXT',
@@ -181,6 +230,13 @@ const hardcodedMessages = {
                 date: '9/4/2022',
                 time: '12:32',
                 content: 'Awful, car had battery problems.'
+            },
+            {
+                type: 'IMG-LOCAL',
+                direction: 'FROM',
+                date: '9/4/2022',
+                time: '12:33',
+                content: 'surprised-batman.jpg'
             }
         ],
         'Joker': []

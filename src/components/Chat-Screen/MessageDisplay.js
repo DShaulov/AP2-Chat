@@ -63,14 +63,24 @@ function MessageDisplay(props) {
     function buildMessages() {
         let messageId = 0;
         let messageList = [];
+        console.log(props.messages[props.currentUser][props.userChattingWith]);
         for (const message of props.messages[props.currentUser][props.userChattingWith]) {
             if (message.type === 'TEXT') {
                 buildTextMessage(message, messageList, messageId);
-                messageId++;
             }
             else if (message.type === 'IMG') {
-                buildImgMessage(message, messageList, messageId);
+                buildImgMessage(message, messageList, messageId, false);
             }
+            else if (message.type === 'IMG-LOCAL') {
+                buildImgMessage(message, messageList, messageId, true);
+            }
+            else if (message.type === 'VIDEO') {
+                buildVideoMessage(message, messageList, messageId, false);
+            }
+            else if (message.type === 'VIDEO-LOCAL') {
+                buildVideoMessage(message, messageList, messageId, true);
+            }
+            messageId++;
         }
         return messageList;
     }
@@ -84,6 +94,7 @@ function MessageDisplay(props) {
             messageList.push(
                 <div className="chat-bubble-container" key={messageId}>
                     <time className="to-message-timestamp">{message.time}</time>
+                    <time className="to-message-datestamp">{message.date}</time>
                     <div className={className} >
                         <p className="text-message-paragraph">{message.content}</p>
                     </div>
@@ -98,6 +109,7 @@ function MessageDisplay(props) {
                         <p className="text-message-paragraph">{message.content}</p>
                     </div>
                     <time className="from-message-timestamp">{message.time}</time>
+                    <time className="from-message-datestamp">{message.date}</time>
                 </div>
             )
         }
@@ -105,16 +117,24 @@ function MessageDisplay(props) {
     /**
      * Helper function
      */
-    function buildImgMessage(message ,messageList, messageId) {
+    function buildImgMessage(message ,messageList, messageId, hasLocalSource) {
         let className = '';
-        let imageURL = URL.createObjectURL(message.content);
+        let imageURL;
+        if (!hasLocalSource) {
+            imageURL = URL.createObjectURL(message.content);
+        }
         if (message.direction === 'TO') {
             className = 'chat-bubble-to';
             messageList.push(
                 <div className="chat-bubble-container" key={messageId}>
                     <time className="to-message-timestamp">{message.time}</time>
+                    <time className="to-message-datestamp">{message.date}</time>
                     <div className={className} >
-                        <Image className="image-message" src={imageURL}></Image>
+                        {
+                            hasLocalSource ?
+                            <Image className="image-message" src={require(`../../images/${message.content}`)}></Image>:
+                            <Image className="image-message" src={imageURL}></Image>
+                        }
                     </div>
                 </div>
             )
@@ -124,9 +144,56 @@ function MessageDisplay(props) {
             messageList.push(
                 <div className="chat-bubble-container"  key={messageId}> 
                     <div className={className}>
-                        <Image className="image-message"src={imageURL}></Image>
+                        {
+                            hasLocalSource ?
+                            <Image className="image-message" src={require(`../../images/${message.content}`)}></Image>:
+                            <Image className="image-message" src={imageURL}></Image>
+                        }
                     </div>
                     <time className="from-message-timestamp">{message.time}</time>
+                    <time className="from-message-datestamp">{message.date}</time>
+                </div>
+            )
+        }
+    }
+    /**
+     * Helper function
+     */
+    function buildVideoMessage(message ,messageList, messageId, hasLocalSource) {
+        let className = '';
+        let videoURL;
+        if (!hasLocalSource) {
+            videoURL = URL.createObjectURL(message.content);
+        };
+        if (message.direction === 'TO') {
+            className = 'chat-bubble-to';
+            messageList.push(
+                <div className="chat-bubble-container" key={messageId}>
+                    <time className="to-message-timestamp">{message.time}</time>
+                    <time className="to-message-datestamp">{message.date}</time>
+                    <div className={className} >
+                        {
+                            hasLocalSource ?
+                            <video src={require(`../../video/${message.content}`)} className="custom-video" controls></video> :
+                            <video src={videoURL} className="custom-video" controls></video>
+                        }
+                    </div>
+                </div>
+            )
+        }
+        else {
+            className = 'chat-bubble-from';
+            messageList.push(
+                <div className="chat-bubble-container"  key={messageId}> 
+                    <div className={className}>
+                        {
+                            hasLocalSource ?
+                            <video src={require(`../../video/${message.content}`)} className="custom-video" controls></video> :
+                            <video src={videoURL} className="custom-video" controls></video>
+                        }
+                    </div>
+                    <time className="from-message-timestamp">{message.time}</time>
+                    <time className="from-message-datestamp">{message.date}</time>
                 </div>
             )
         }
@@ -158,15 +225,34 @@ function MessageDisplay(props) {
             }
         );
         setShowUploadImagePopup(false);
-        ;
     }
     /**
      * Handles user video upload
      */
     function handleUploadVideo(event) {
         event.preventDefault();
+        let videoFile = event.target[0].files[0];
+        let updatedMessages = {...props.messages};
+        props.functions.updateMessages(updatedMessages);
+        updatedMessages[props.currentUser][props.userChattingWith].push(
+            {
+                type: 'VIDEO',
+                direction: 'TO',
+                date: parseDate(),
+                time: parseTime(),
+                content: videoFile
+            }
+        );
+        updatedMessages[props.userChattingWith][props.currentUser].push(
+            {
+                type: 'VIDEO',
+                direction: 'FROM',
+                date: parseDate(),
+                time: parseTime(),
+                content: videoFile
+            }
+        );
         setShowUploadVideoPopup(false);
-        ;
     }
     /**
      * Handles user voice recording
@@ -174,7 +260,6 @@ function MessageDisplay(props) {
     function handleRecordVoice(event) {
         event.preventDefault();
         setShowRecordVoicePopup(false);
-        ;
     }
     const popover = (
         <Popover>
