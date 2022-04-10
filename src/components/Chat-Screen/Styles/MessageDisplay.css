@@ -126,7 +126,8 @@
 }
 .to-message-timestamp {
     margin-left: auto;
-    margin-top: 2.5rem;
+    margin-top: auto;
+    margin-bottom: 0.5rem;
     margin-right: 0.5rem;
 }
 .list-card-div__time-div__time {

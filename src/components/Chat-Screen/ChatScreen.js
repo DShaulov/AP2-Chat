@@ -125,6 +125,9 @@ function ChatScreen(props) {
             setChattingWith(username);
         }
     }
+    const messageDisplayFunctions = {
+        updateMessages
+    }
     return (
         <div className="ChatScreen-div">
             <div className="ChatScreen-div__ContactDisplay-div">
@@ -133,7 +136,7 @@ function ChatScreen(props) {
             <div className="ChatScreen-div__MessageDisplay-div">
                 {
                     showMessageDisplay &&
-                    <MessageDisplay userChattingWith={chattingWith} currentUser={props.currentUser} users={props.users} messages={messages}/>
+                    <MessageDisplay userChattingWith={chattingWith} currentUser={props.currentUser} users={props.users} messages={messages} functions={messageDisplayFunctions}/>
                 }
             </div>
         </div>

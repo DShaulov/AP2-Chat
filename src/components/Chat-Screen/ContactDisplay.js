@@ -71,16 +71,22 @@ function ContactDisplay(props) {
      */
     function parseLastMessage(contact) {
         let allMessages = props.messages[props.currentUser][contact];
-        let lastMessage = allMessages[allMessages.length - 1];
-        return lastMessage.content;
+        if (allMessages.length !== 0) {
+            let lastMessage = allMessages[allMessages.length - 1];
+            return lastMessage.content;
+        }
+        return '';
     }
     /**
      * Retries the time of the last message exchange
      */
     function parseLastMessageTime(contact) {
         let allMessages = props.messages[props.currentUser][contact];
-        let lastMessage = allMessages[allMessages.length - 1];
-        return lastMessage.time;
+        if (allMessages.length !== 0) {
+            let lastMessage = allMessages[allMessages.length - 1];
+            return lastMessage.time;
+        }
+        return '';
     }
     /**
      * Checks if contact exists
@@ -100,6 +106,7 @@ function ContactDisplay(props) {
         e.preventDefault();
         let username = e.target[0].value;
         if (contactExists(username) && username !== props.currentUser) {
+            // Add to contacts
             let updatedUsers = {...props.users};
             if (!updatedUsers[props.currentUser].contacts.includes(username)) {
                 updatedUsers[props.currentUser].contacts.push(username);
@@ -107,8 +114,12 @@ function ContactDisplay(props) {
             if (!updatedUsers[username].contacts.includes(props.currentUser)) {
                 updatedUsers[username].contacts.push(props.currentUser);
             }
-            props.functions.updateUsers(updatedUsers);
+            // Update messages
+            console.log(props.messages);
+            props.messages[props.currentUser][username] = [];
+            props.messages[username][props.currentUser] = [];
             hideModal();
+            props.functions.updateUsers(updatedUsers);
         }
         else {
             setContactDoesNotExist(true);

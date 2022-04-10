@@ -8,9 +8,29 @@ function MessageDisplay(props) {
     /**
      * Sends a message to another use
      */
-    function sendMessage(event) {
+    function sendTextMessage(event) {
         event.preventDefault();
-        console.log(event.target[0].value);
+        let updatedMessages = {...props.messages};
+        updatedMessages[props.currentUser][props.userChattingWith].push(
+            {
+                type: 'TEXT',
+                direction: 'TO',
+                date: parseDate(),
+                time: parseTime(),
+                content: event.target[0].value
+            }
+        );
+        updatedMessages[props.userChattingWith][props.currentUser].push(
+            {
+                type: 'TEXT',
+                direction: 'FROM',
+                date: parseDate(),
+                time: parseTime(),
+                content: event.target[0].value
+            }
+        );
+        event.target[0].value = '';
+        props.functions.updateMessages(updatedMessages);
     };
     /**
      * Returns current date in dd/mm/yy format
@@ -27,8 +47,7 @@ function MessageDisplay(props) {
     function parseTime() {
         let minutes = String(date.getMinutes()).padStart(2, '0');
         let hours = String(date.getHours()).padStart(2, '0');
-        return minutes + '/' + hours;
-
+        return hours + ':' + minutes;
     }
     /**
      * Builds DOM elements out of messages
@@ -107,7 +126,7 @@ function MessageDisplay(props) {
                         <Paperclip></Paperclip>
                     </Button>
                 </OverlayTrigger>
-                <Form className="custom-footer__custom-form" onSubmit={sendMessage}>
+                <Form className="custom-footer__custom-form" onSubmit={sendTextMessage}>
                     <Form.Group className="custom-footer__custom-form__custom-grp">
                         <Form.Control placeholder="Enter message" className="custom-footer__custom-form__custom-grp__custom-control"></Form.Control>
                     </Form.Group>

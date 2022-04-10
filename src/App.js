@@ -27,7 +27,7 @@ function App() {
             password: '123',
             displayName: 'Superman',
             profileImage: 'superman-cropped.png',
-            contacts: ['Batman', 'Messi']
+            contacts: ['Ronaldo']
         },
         'Messi': {
             password: '123',
@@ -39,13 +39,13 @@ function App() {
             password: '123',
             displayName: 'Ronaldo',
             profileImage: 'ronaldo-cropped.png',
-            contacts: ['Superman', 'Messi']
+            contacts: ['Superman']
         },
         'Max': {
             password: '123',
             displayName: 'Max',
             profileImage: 'max-v.png',
-            contacts: ['Ronaldo', 'Superman']
+            contacts: ['Batman', 'Messi']
         },
     });
     /**
