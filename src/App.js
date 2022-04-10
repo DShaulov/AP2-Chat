@@ -1,10 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import AppRouter from './components/App-Router/AppRouter';
+import hardcodedMessages from './HardcodedMessages';
+import hardcodedUsers from './HardcodedUsers';
 
 function App() {
     const [ currentUser, setCurrentUser ] = useState(getCurrentUser());
+    const [ users, updateUsers ] = useState(hardcodedUsers);
+    const [ messages, updateMessages ] = useState(hardcodedMessages);
     /**
      * Checks local storage for who the current user is
      */
@@ -15,39 +19,6 @@ function App() {
         }
         return '';
     }
-
-    const [ users, updateUsers ] = useState({
-        'Batman': {
-            password: '123',
-            displayName: 'Batman',
-            profileImage: 'batman-cropped.png',
-            contacts: ['Max', 'Messi']
-        },
-    	'Superman': {
-            password: '123',
-            displayName: 'Superman',
-            profileImage: 'superman-cropped.png',
-            contacts: ['Ronaldo']
-        },
-        'Messi': {
-            password: '123',
-            displayName: 'Messi',
-            profileImage: 'messi-cropped.png',
-            contacts: ['Ronaldo', 'Batman']
-        },
-        'Ronaldo': {
-            password: '123',
-            displayName: 'Ronaldo',
-            profileImage: 'ronaldo-cropped.png',
-            contacts: ['Superman']
-        },
-        'Max': {
-            password: '123',
-            displayName: 'Max',
-            profileImage: 'max-v.png',
-            contacts: ['Batman', 'Messi']
-        },
-    });
     /**
      * Checks whether or not a username is already taken
      */
@@ -83,12 +54,13 @@ function App() {
         addUser: addUser
     };
     const chatFunctions = {
-        updateUsers: updateUsers
+        updateUsers: updateUsers,
+        updateMessages: updateMessages
     }
     return (
         <AppRouter
         registerFunctions={registerFunctions} loginFunctions={loginFunctions} chatFunctions={chatFunctions}
-        currentUser={currentUser} users={users}/>
+        currentUser={currentUser} users={users} messages={messages}/>
     );
 }
 export default App;

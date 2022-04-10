@@ -33,7 +33,7 @@ function AppRouter(props) {
                 <div className="App__content">
                     <Routes>
                         {loggedIn ?
-                        <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users}/>}/> :
+                        <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
                         <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
                         }
                         <Route path="/register" element={<RegisterScreen functions={props.registerFunctions}/>}/>
