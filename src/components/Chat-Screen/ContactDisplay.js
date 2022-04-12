@@ -11,6 +11,7 @@ function ContactDisplay(props) {
     const [ windowHeight, setWindowHeight ] = useState(window.innerHeight);
     const [ showAddContactPopup, setShowAddContactPopup ] = useState(false);
     const [ contactDoesNotExist, setContactDoesNotExist ] = useState(false);
+    const date = new Date();
     window.addEventListener('resize', () => {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
@@ -91,7 +92,7 @@ function ContactDisplay(props) {
                     </>
                 );
             }
-            if (lastMessage.type === 'VOICE' || lastMessage.type === 'VOICE-LOCAL') {
+            if (lastMessage.type === 'AUDIO' || lastMessage.type === 'AUDIO-LOCAL') {
                 return (
                     <>
                         <MicFill className="last-message-icon"/>
@@ -112,9 +113,18 @@ function ContactDisplay(props) {
         let allMessages = props.messages[props.currentUser][contact];
         if (allMessages.length !== 0) {
             let lastMessage = allMessages[allMessages.length - 1];
+            if (parseDate() !== lastMessage.date) {
+                return lastMessage.date;
+            }
             return lastMessage.time;
         }
         return '';
+    }
+    function parseDate() {
+        let day = String(date.getDate()).padStart(2, '0');
+        let month = String(date.getMonth() + 1).padStart(2, '0');
+        let year = String(date.getFullYear());
+        return day + '/' + month + '/' + year;
     }
     /**
      * Checks if contact exists
