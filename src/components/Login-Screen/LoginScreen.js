@@ -17,7 +17,7 @@ function LoginScreen(props) {
         let username = e.target[0].value;
         let password = e.target[1].value;
         // If username/password empty, display warning
-        if (username === '') {
+        if (username === '' ) {
             setUsernameNotFilled(true);
         } else {
             if (usernameNotFilled) {setUsernameNotFilled(false)};
