@@ -34,7 +34,18 @@ function App() {
      * TODO
      * Adds user to users database
      */
-    function addUser(username, password) {
+    function addUser(username, password, nickname) {
+        if (!isUsernameTaken(username)){
+            let updatedUsers = {...users};
+            updatedUsers[username] = {
+                password: password, 
+                displayName: nickname,
+                profileImage: `default-user.png`,
+                contacts: [],
+                        }
+                        updateUsers(updatedUsers);
+        }
+        return false;
     };
     /**
      * Check if provided password and username match

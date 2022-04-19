@@ -37,3 +37,12 @@ const hardcodedUsers = {
     },
 };
 export default hardcodedUsers;
+
+/*
+username:  {
+        password: '123',
+        displayName: 'Superman',
+        profileImage: 'superman-cropped.png',
+        contacts: ['Batman']
+
+*/
