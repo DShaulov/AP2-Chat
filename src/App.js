@@ -6,19 +6,9 @@ import hardcodedMessages from './HardcodedMessages';
 import hardcodedUsers from './HardcodedUsers';
 
 function App() {
-    const [ currentUser, setCurrentUser ] = useState(getCurrentUser());
+    const [ currentUser, setCurrentUser ] = useState('');
     const [ users, updateUsers ] = useState(hardcodedUsers);
     const [ messages, updateMessages ] = useState(hardcodedMessages);
-    /**
-     * Checks local storage for who the current user is
-     */
-    function getCurrentUser() {
-        let storageCurrentUser = localStorage.getItem('currentUser');
-        if (storageCurrentUser !== null) {
-            return storageCurrentUser
-        }
-        return '';
-    }
     /**
      * Checks whether or not a username is already taken
      */

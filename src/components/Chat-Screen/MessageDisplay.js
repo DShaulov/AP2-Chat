@@ -8,7 +8,7 @@ function MessageDisplay(props) {
     const [ showUploadVideoPopup, setShowUploadVideoPopup] = useState(false);
     const [ showRecordVoicePopup, setShowRecordVoicePopup] = useState(false);
     const [ mediaStream, setMediaStream ] = useState(null);
-    const [ voiceRecordingURL, setVoiceRecordingURL] = useState(null);
+    const [ voiceRecordingBlob, setVoiceRecordingBlob ] = useState(null);
     useEffect(()=> {
         // Scroll chat window to bottom on render
         let chatDiv = document.getElementsByClassName("messages-div")[0];
@@ -349,8 +349,8 @@ function MessageDisplay(props) {
             }
         });
         mediaRecorder.addEventListener('stop', ()=> {
-            let recordingURL = URL.createObjectURL(new Blob(recordedChunks));
-            setVoiceRecordingURL(recordingURL);
+            let chunksBlob = new Blob(recordedChunks);
+            setVoiceRecordingBlob(chunksBlob);
         });
         stopBtn.addEventListener('click', ()=> {
             mediaRecorder.stop();
@@ -382,7 +382,7 @@ function MessageDisplay(props) {
                 direction: 'TO',
                 date: parseDate(),
                 time: parseTime(),
-                content: voiceRecordingURL
+                content: voiceRecordingBlob
             }
         );
         updatedMessages[props.userChattingWith][props.currentUser].push(
@@ -391,11 +391,11 @@ function MessageDisplay(props) {
                 direction: 'FROM',
                 date: parseDate(),
                 time: parseTime(),
-                content: voiceRecordingURL
+                content: voiceRecordingBlob
             }
         );
         props.functions.updateMessages(updatedMessages);
-        setVoiceRecordingURL(null);
+        setVoiceRecordingBlob(null);
         setShowRecordVoicePopup(false);
     }
     const popover = (
@@ -481,9 +481,9 @@ function MessageDisplay(props) {
                         </Form.Group>
                         <Form.Group className="capture-group">
                             {
-                                voiceRecordingURL &&
+                                voiceRecordingBlob &&
                                 <>
-                                    <audio src={voiceRecordingURL} controls></audio>
+                                    <audio src={URL.createObjectURL(voiceRecordingBlob)} controls></audio>
                                     <Button variant="primary" onClick={handleVoiceRecordingMessage}>Send</Button>
                                 </>
                             }

@@ -33,8 +33,6 @@ function LoginScreen(props) {
             return;
         }
         if (props.functions.isUserValid(username, password)) {
-            localStorage.setItem('currentUser', username);
-            localStorage.setItem('loggedIn', true);
             props.functions.setCurrentUser(username);
             props.functions.setLoggedIn(true);
             if (userNotValid) {

@@ -7,21 +7,21 @@ import LoginScreen from '../Login-Screen/LoginScreen';
 import ChatScreen from '../Chat-Screen/ChatScreen';
 
 function AppRouter(props) {
-    const [loggedIn, setLoggedIn] = useState(getLoggedIn());
+    const [loggedIn, setLoggedIn] = useState(false);
     const loginFunctions = {...props.loginFunctions, setLoggedIn:setLoggedIn};
     /**
      * Checks local storage for whether or not a user is logged in
      */
-    function getLoggedIn() {
-        let storedLoggedIn = localStorage.getItem('loggedIn');
-        if (storedLoggedIn !== null) {
-            let loggedIn = JSON.parse(storedLoggedIn);
-            return loggedIn;
-        }
-        else{
-            return false;
-        }
-    }
+    // function getLoggedIn() {
+    //     let storedLoggedIn = localStorage.getItem('loggedIn');
+    //     if (storedLoggedIn !== null) {
+    //         let loggedIn = JSON.parse(storedLoggedIn);
+    //         return loggedIn;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    // }
     const chatFunctions = {
         ...props.chatFunctions,
         setLoggedIn
