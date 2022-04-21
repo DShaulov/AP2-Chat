@@ -58,13 +58,13 @@ function RegisterScreen(props) {
         else {
             if (passwordNotFilled) {setPasswordNotFilled(false)};
         }
-        if ((!hasNumber(password) || !hasChar(password))&& !passwordNotFilled) {
+        if ((!hasNumber(password) || !hasChar(password))&& passwordNotFilled) {
             setPasswordWrong(true);
         }
          else {
             if (passwordWrong) {setPasswordWrong(false)};
         }
-        if (password != ConfirmPassword && !passwordWrong && !passwordNotFilled) {
+        if (password !== ConfirmPassword && passwordWrong && passwordNotFilled) {
             setPasswordConfirm(true);
         }
         else {
@@ -76,15 +76,27 @@ function RegisterScreen(props) {
          else {
             if (nicknameNotFilled) {setNicknameNotFilled(false)};
         }
-        if (usernameNotFilled || passwordNotFilled || nicknameNotFilled) {
+        if (usernameNotFilled || passwordNotFilled || nicknameNotFilled ||nicknameNotFilled || passwordWrong ) {
             setUserNotValid(false);
             return;
         }
+      /*  if (!userNotValid) {
+           // localStorage.setItem('currentUser', username);
+           // localStorage.setItem('loggedIn', true);
+            //props.functions.updateusers(props.functions.addUser(username, password, nickname));
+            props.functions.setLoggedIn(true);
+            if (userNotValid) {
+                setUserNotValid(false)
+            };
+            return;
+        } else {
+            setUserNotValid(true);
+        }*/
         if (props.functions.isUserValid(username, password)) {
-          //  localStorage.setItem('currentUser', username);
-          //  localStorage.setItem('loggedIn', true);
-            props.functions.updateUsers(username);
-            //props.functions.users(true);
+            localStorage.setItem('currentUser', username);
+            localStorage.setItem('loggedIn', true);
+            props.functions.setCurrentUser(username);
+            props.functions.setLoggedIn(true);
             if (userNotValid) {
                 setUserNotValid(false)
             };
@@ -92,7 +104,6 @@ function RegisterScreen(props) {
         } else {
             setUserNotValid(true);
         }
-
     }
     return (
         <div className="register-screen-div">
