@@ -32,8 +32,11 @@ function App() {
                 displayName: nickname,
                 profileImage: `default-user.png`,
                 contacts: [],
-                        }
-                        updateUsers(updatedUsers);
+            }
+            updateUsers(updatedUsers);
+            let updatedMessages = {...messages};
+            updatedMessages[username] = {};
+            updateMessages(updatedMessages);
         }
         return false;
     };
