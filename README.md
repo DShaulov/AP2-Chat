@@ -7,6 +7,7 @@
 ### Executing Program:
 
 - Using the command line, navigate to ap2-chat folder
+- Execute 'npm install' command
 - Execute 'npm start' command
 
 ### Main User:
