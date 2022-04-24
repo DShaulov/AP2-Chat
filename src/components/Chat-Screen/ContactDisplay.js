@@ -20,9 +20,8 @@ function ContactDisplay(props) {
      * Deletes local storage associated with user and logs him out
      */
     function logOut() {
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('loggedIn');
         props.functions.setLoggedIn(false);
+        props.functions.setCurrentUser('');
     }
     /**
      * Opens the message display upon clicking on a contact

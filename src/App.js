@@ -13,7 +13,7 @@ function App() {
      * Checks whether or not a username is already taken
      */
     function isUsernameTaken(username) {
-        for (const user in Object.keys(users)) {
+        for (const user of Object.keys(users)) {
             if (user === username) {
                 return true;
             }
@@ -55,11 +55,13 @@ function App() {
     };
     const registerFunctions = {
         isUsernameTaken: isUsernameTaken,
-        addUser: addUser
+        addUser: addUser,
+        setCurrentUser: setCurrentUser
     };
     const chatFunctions = {
         updateUsers: updateUsers,
-        updateMessages: updateMessages
+        updateMessages: updateMessages,
+        setCurrentUser: setCurrentUser
     }
     return (
         <AppRouter

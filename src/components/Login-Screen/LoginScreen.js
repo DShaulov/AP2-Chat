@@ -42,7 +42,6 @@ function LoginScreen(props) {
         } else {
             setUserNotValid(true);
         }
-
     }
     return (
         <div className="login-screen-div">

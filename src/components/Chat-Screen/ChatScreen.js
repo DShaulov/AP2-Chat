@@ -9,10 +9,12 @@ function ChatScreen(props) {
     const setLoggedIn = props.functions.setLoggedIn;
     const updateUsers = props.functions.updateUsers;
     const updateMessages = props.functions.updateMessages;
+    const setCurrentUser = props.functions.setCurrentUser;
     const contactDisplayFunctions = {
         updateUsers,
         setLoggedIn,
-        openMessageDisplay
+        openMessageDisplay,
+        setCurrentUser
     };
     const messageDisplayFunctions = {
         updateMessages

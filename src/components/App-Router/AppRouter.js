@@ -8,20 +8,12 @@ import ChatScreen from '../Chat-Screen/ChatScreen';
 
 function AppRouter(props) {
     const [loggedIn, setLoggedIn] = useState(false);
-    const loginFunctions = {...props.loginFunctions, setLoggedIn:setLoggedIn};
-    /**
-     * Checks local storage for whether or not a user is logged in
-     */
-    // function getLoggedIn() {
-    //     let storedLoggedIn = localStorage.getItem('loggedIn');
-    //     if (storedLoggedIn !== null) {
-    //         let loggedIn = JSON.parse(storedLoggedIn);
-    //         return loggedIn;
-    //     }
-    //     else{
-    //         return false;
-    //     }
-    // }
+    const loginFunctions = {...props.loginFunctions,
+        setLoggedIn:setLoggedIn
+    };
+    const registerFunctions = {...props.registerFunctions,
+        setLoggedIn:setLoggedIn
+    };
     const chatFunctions = {
         ...props.chatFunctions,
         setLoggedIn
@@ -32,11 +24,17 @@ function AppRouter(props) {
                 <Navbar></Navbar>
                 <div className="App__content">
                     <Routes>
-                        {loggedIn ?
-                        <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
-                        <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
+                        {   
+                            loggedIn ?
+                            <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
+                            <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
                         }
-                        <Route path="/register" element={<RegisterScreen functions={props.registerFunctions}/>}/>
+                        {
+                            loggedIn ?
+                            <Route path="/register" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
+                            <Route path="/register" element={<RegisterScreen functions={registerFunctions}/>}/>
+                        
+                        }
                     </Routes>
                 </div>
             </div>
