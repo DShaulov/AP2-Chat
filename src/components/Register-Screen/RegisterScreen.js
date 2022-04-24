@@ -37,24 +37,28 @@ function RegisterScreen(props) {
         // Check if fields are empty and display warnings
         if (username === '') {
             setUsernameNotFilled(true);
+            return;
         }
          else {
             if (usernameNotFilled) {setUsernameNotFilled(false)};
         }
         if (password === '') {
             setPasswordNotFilled(true);
+            return;
         }
         else {
             if (passwordNotFilled) {setPasswordNotFilled(false)};
         }
         if (confirmPassword === '') {
             setConfirmPasswordNotFilled(true);
+            return;
         }
         else {
             if (confirmPasswordNotFilled) {setConfirmPasswordNotFilled(false)};
         }
         if (nickname === '') {
             setNicknameNotFilled(true);
+            return;
         }
         else {
             if (nicknameNotFilled) {setNicknameNotFilled(false)};
@@ -63,16 +67,17 @@ function RegisterScreen(props) {
             return;
         }
 
-
         // Check if password and username are valid
         if (!stringHasNumber(password) || !stringHasChar(password)) {
             setPasswordNotValid(true);
+            return;
         }
          else {
             if (passwordNotValid) {setPasswordNotValid(false)};
         }
         if (password !== confirmPassword) {
             setPasswordsDontMatch(true);
+            return;
         }
         else {
             if (passwordsDontMatch) {setPasswordsDontMatch(false)};
@@ -85,13 +90,21 @@ function RegisterScreen(props) {
          else {
             if (usernameTaken) {setUsernameTaken(false)};
         }
-        if (passwordNotValid || passwordsDontMatch || usernameTaken) {
+        if (passwordNotValid || passwordsDontMatch || usernameTaken)  {
             return;
+            
         }
+        if (usernameNotFilled || passwordNotFilled  ||nicknameNotFilled || passwordNotFilled || passwordsDontMatch ) {
+            setUserNotValid(true);
+        //return;   
+    }
+
+        //if (!userNotValid){
         props.functions.setCurrentUser(username);
         props.functions.addUser(username, password, nickname);
         props.functions.setLoggedIn(true);
         return;
+     //   }
     }
     return (
         <div className="register-screen-div">
