@@ -80,6 +80,7 @@ function RegisterScreen(props) {
 
         if (props.functions.isUsernameTaken(username)) {
             setUsernameTaken(true);
+            return;
         }
          else {
             if (usernameTaken) {setUsernameTaken(false)};
