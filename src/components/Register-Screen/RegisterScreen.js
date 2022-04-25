@@ -63,10 +63,6 @@ function RegisterScreen(props) {
         else {
             if (nicknameNotFilled) {setNicknameNotFilled(false)};
         }
-        if (usernameNotFilled || passwordNotFilled || confirmPasswordNotFilled || nicknameNotFilled) {
-            return;
-        }
-
         // Check if password and username are valid
         if (!stringHasNumber(password) || !stringHasChar(password)) {
             setPasswordNotValid(true);
@@ -90,21 +86,10 @@ function RegisterScreen(props) {
          else {
             if (usernameTaken) {setUsernameTaken(false)};
         }
-        if (passwordNotValid || passwordsDontMatch || usernameTaken)  {
-            return;
-            
-        }
-        if (usernameNotFilled || passwordNotFilled  ||nicknameNotFilled || passwordNotFilled || passwordsDontMatch ) {
-            setUserNotValid(true);
-        //return;   
-    }
-
-        //if (!userNotValid){
         props.functions.setCurrentUser(username);
         props.functions.addUser(username, password, nickname);
         props.functions.setLoggedIn(true);
         return;
-     //   }
     }
     return (
         <div className="register-screen-div">

@@ -1,7 +1,7 @@
 import './Styles/ContactDisplay.css';
 import { useState } from 'react';
-import { List } from 'react-bootstrap-icons';
 import { Button, Dropdown, ListGroup, Modal, Form, Navbar, Container, Image } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import { CameraFill, CameraVideoFill, MicFill } from 'react-bootstrap-icons';
 
@@ -12,6 +12,7 @@ function ContactDisplay(props) {
     const [ showAddContactPopup, setShowAddContactPopup ] = useState(false);
     const [ contactDoesNotExist, setContactDoesNotExist ] = useState(false);
     const date = new Date();
+    const navigate = useNavigate();
     window.addEventListener('resize', () => {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
@@ -22,6 +23,7 @@ function ContactDisplay(props) {
     function logOut() {
         props.functions.setLoggedIn(false);
         props.functions.setCurrentUser('');
+        navigate("/");
     }
     /**
      * Opens the message display upon clicking on a contact
@@ -152,7 +154,6 @@ function ContactDisplay(props) {
                 updatedUsers[username].contacts.push(props.currentUser);
             }
             // Update messages
-            console.log(props.messages);
             props.messages[props.currentUser][username] = [];
             props.messages[username][props.currentUser] = [];
             hideModal();
